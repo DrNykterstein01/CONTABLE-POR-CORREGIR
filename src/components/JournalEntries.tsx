@@ -61,6 +61,15 @@ export function JournalEntries() {
     setLines(newLines);
   };
 
+  const getPlaceholders = (accountId?: string) => {
+    const account = accounts.find(a => a.id === accountId);
+    if (!account) return { debit: '', credit: '' };
+    const increasesOnDebit = account.type === 'ACTIVO' || account.type === 'GASTO';
+    return increasesOnDebit
+      ? { debit: 'Aumenta', credit: 'Disminuye' }
+      : { debit: 'Disminuye', credit: 'Aumenta' };
+  };
+
   const getTotalDebits = () => lines.reduce((sum, line) => sum + (line.debit || 0), 0);
   const getTotalCredits = () => lines.reduce((sum, line) => sum + (line.credit || 0), 0);
   const isBalanced = () => Math.abs(getTotalDebits() - getTotalCredits()) < 0.01;
@@ -318,6 +327,7 @@ export function JournalEntries() {
                               min="0"
                               value={line.debit || ''}
                               onChange={(e) => updateLine(index, 'debit', parseFloat(e.target.value) || 0)}
+                              placeholder={getPlaceholders(line.accountId).debit}
                               className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right focus:ring-2 focus:ring-blue-500"
                               disabled={!canEdit}
                             />
@@ -329,6 +339,7 @@ export function JournalEntries() {
                               min="0"
                               value={line.credit || ''}
                               onChange={(e) => updateLine(index, 'credit', parseFloat(e.target.value) || 0)}
+                              placeholder={getPlaceholders(line.accountId).credit}
                               className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right focus:ring-2 focus:ring-blue-500"
                               disabled={!canEdit}
                             />

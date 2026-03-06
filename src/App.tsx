@@ -63,7 +63,7 @@ function AppContent() {
       {/* watermark logo shown only when user is authenticated (hidden on small screens) */}
       {user && (
         <img
-          src="/logo.jpg"
+          src={import.meta.env.PROD ? './logo.jpg' : '/logo.jpg'}
           alt=""
           aria-hidden="true"
           className="hidden md:block"

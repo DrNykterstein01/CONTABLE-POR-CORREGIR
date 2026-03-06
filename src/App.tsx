@@ -125,7 +125,7 @@ function AppContent() {
         <div className="p-4 border-t border-gray-700">
           <div className={`${sidebarOpen ? 'block' : 'hidden'} text-xs text-gray-400`}>
             <p className="mb-1">Sistema Contable Hvent v1.3 (núcleo)</p>
-            <p>Núcleo Hvent</p>
+            <p>(Versión Demo)</p>
           </div>
         </div>
       </aside>
